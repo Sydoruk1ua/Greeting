@@ -1,4 +1,4 @@
-
+![CircleCI status](https://circleci.com/gh/Sydoruk1ua/Greeting.png?style=shield)
 # Greeting
 This is console Java application.
 The application displays a greeting message, depending on the current time of a day and user location.

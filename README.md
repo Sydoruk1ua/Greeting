@@ -1,4 +1,4 @@
-[![Build Status](https://circleci.com/gh/Sydoruk1ua/Greeting/1)]
+[![Build Status](https://circleci.com/gh/Sydoruk1ua/Greeting/1)] (https://circleci.com/gh/Sydoruk1ua/Greeting/1)
 # Greeting
 This is console Java application.
 The application displays a greeting message, depending on the current time of a day and user location.

@@ -2,7 +2,7 @@ machine:
   java:
     version: openjdk8
 
-    general:
+general:
       branches:
         only:
           - master

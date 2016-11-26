@@ -9,14 +9,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 class GreetingToWorld {
-    final static Logger logger=Logger.getLogger(GreetingToWorld.class);
-    private static LocalTime currentTime;
+    final static Logger logger = Logger.getLogger(GreetingToWorld.class);
 
-    static void getMessage() {
+    static void getMessage(LocalTime currentTime) {
         Locale currentLocale = Locale.getDefault();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", currentLocale);
 
-        int currentHour = getCurrentTime().getHour();
+        int currentHour = currentTime.getHour();
         String greeting = null;
         if (currentHour >= 6 && currentHour < 9) {
             greeting = resourceBundle.getString("greetingMorning");
@@ -36,14 +35,5 @@ class GreetingToWorld {
         }
 
     }
-
-     static LocalTime getCurrentTime() {
-        return currentTime;
-    }
-
-     static void setCurrentTime(LocalTime localTime) {
-        currentTime = localTime;
-    }
-
 
 }

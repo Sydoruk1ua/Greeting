@@ -1,9 +1,9 @@
 package ua.in.sydoruk;
 
-import java.time.LocalTime;
+import java.time.Clock;
 
 public class Main {
     public static void main(String[] args) {
-        GreetingToWorld.getMessage(LocalTime.now());
+        new GreetingToWorld(Clock.systemDefaultZone()).displayGreeting();
     }
 }

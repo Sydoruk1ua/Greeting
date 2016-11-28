@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="ua.in.sydoruk.GreetingToWorldTest" time="0.009" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="ua.in.sydoruk.GreetingToWorldTest" time="0.066" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2016.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -66,6 +66,6 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="ua.in.sydoruk.GreetingToWorldTest" name="testLocaleRu" time="0.009"/>
+  <testcase classname="ua.in.sydoruk.GreetingToWorldTest" name="testLocaleRu" time="0.066"/>
   <testcase classname="ua.in.sydoruk.GreetingToWorldTest" name="testLocaleUS" time="0"/>
 </testsuite>

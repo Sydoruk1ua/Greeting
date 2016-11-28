@@ -6,35 +6,26 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.time.LocalTime;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Locale;
 
+import static java.time.ZoneOffset.UTC;
 import static org.junit.Assert.assertEquals;
 
 public class GreetingToWorldTest {
     final static Logger logger = Logger.getLogger(GreetingToWorldTest.class);
 
-    private Locale localeRu = new Locale("ru", "RU");
-    private Locale localeUs = new Locale("en", "US");
-
-
-    private LocalTime time6 = LocalTime.of(6, 30);
-    private LocalTime time9 = LocalTime.of(9, 30);
-    private LocalTime time19 = LocalTime.of(19, 30);
-    private LocalTime time23 = LocalTime.of(23, 30);
-
     @Test
     public void testLocaleUS() throws IOException {
-         String greetingMorningEn = "Good morning, World!";
-         String greetingDayEn = "Good day, World!";
-         String greetingEveningEn = "Good evening, World!";
-         String greetingNightEn = "Good night, World!";
-        Locale.setDefault(localeUs);
-        try {
-            testTime(greetingMorningEn, greetingDayEn, greetingEveningEn, greetingNightEn);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        String greetingMorningEn = "Good morning, World!";
+        String greetingDayEn = "Good day, World!";
+        String greetingEveningEn = "Good evening, World!";
+        String greetingNightEn = "Good night, World!";
+        Locale.setDefault(new Locale("en", "US"));
+
+        testTime(greetingMorningEn, greetingDayEn, greetingEveningEn, greetingNightEn);
+
 
     }
 
@@ -45,41 +36,34 @@ public class GreetingToWorldTest {
         String greetingDayRu = "Добрый день, Мир!";
         String greetingEveningRu = "Добрый вечер, Мир!";
         String greetingNightRu = "Доброй ночи, Мир!";
-        Locale.setDefault(localeRu);
-        try {
-            testTime(greetingMorningRu, greetingDayRu, greetingEveningRu, greetingNightRu);
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        Locale.setDefault(new Locale("ru", "RU"));
+
+        testTime(greetingMorningRu, greetingDayRu, greetingEveningRu, greetingNightRu);
+
 
     }
 
     private void testTime(String greetingMorning, String greetingDay,
-                          String greetingEvening, String greetingNight) throws IOException {
+                          String greetingEvening, String greetingNight) {
 
-        ByteArrayOutputStream outContentForMorning = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContentForMorning));
-        GreetingToWorld.getMessage(time6);
-        assertEquals(greetingMorning, outContentForMorning.toString());
-        outContentForMorning.close();
+        assertEquals(greetingMorning, getGreetingFromOutputStream("2007-12-03T06:00:00.00Z"));
+        assertEquals(greetingDay, getGreetingFromOutputStream("2007-12-03T09:00:00.00Z"));
+        assertEquals(greetingEvening, getGreetingFromOutputStream("2007-12-03T19:00:00.00Z"));
+        assertEquals(greetingNight, getGreetingFromOutputStream("2007-12-03T23:00:00.00Z"));
+    }
 
-        ByteArrayOutputStream outContentForDay = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContentForDay));
-        GreetingToWorld.getMessage(time9);
-        assertEquals(greetingDay, outContentForDay.toString());
-        outContentForDay.close();
+    private String getGreetingFromOutputStream(String currentTestTime) {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        new GreetingToWorld(Clock.fixed(Instant.parse(currentTestTime), UTC)).displayGreeting();
+        try {
+            outContent.close();
+        } catch (IOException e) {
+            logger.error(e);
+        }
 
-        ByteArrayOutputStream outContentForEvening = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContentForEvening));
-        GreetingToWorld.getMessage(time19);
-        assertEquals(greetingEvening, outContentForEvening.toString());
-        outContentForEvening.close();
+        return outContent.toString();
 
-        ByteArrayOutputStream outContentForNight = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContentForNight));
-        GreetingToWorld.getMessage(time23);
-        assertEquals(greetingNight, outContentForNight.toString());
-        outContentForNight.close();
     }
 
 

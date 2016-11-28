@@ -4,18 +4,23 @@ import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 class GreetingToWorld {
     final static Logger logger = Logger.getLogger(GreetingToWorld.class);
+    private Clock clock;
 
-    static void getMessage(LocalTime currentTime) {
+    GreetingToWorld(Clock clock){
+        this.clock = clock;
+    }
+
+     void displayGreeting() {
         Locale currentLocale = Locale.getDefault();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", currentLocale);
-
-        int currentHour = currentTime.getHour();
+        int currentHour = LocalTime.now(clock).getHour();
         String greeting = null;
         if (currentHour >= 6 && currentHour < 9) {
             greeting = resourceBundle.getString("greetingMorning");
